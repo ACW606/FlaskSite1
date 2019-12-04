@@ -38,4 +38,6 @@ def index():
     return redirect(url_for('index'))
 
 
-
+@app.route("/login/")
+def login():
+    return render_template("login_page.html")
