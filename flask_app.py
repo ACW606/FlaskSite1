@@ -76,6 +76,20 @@ def index():
     return redirect(url_for('index'))
 
 
+@app.route("/scratch/", methods=["GET", "POST"])
+def index2():
+    if request.method == "GET":
+        return render_template("scratch_page.html", comments=Comment.query.all())
+
+    if not current_user.is_authenticated:
+        return redirect(url_for('index'))
+
+    comment = Comment(content=request.form["contents"], commenter=current_user)
+    db.session.add(comment)
+    db.session.commit()
+    return redirect(url_for('index'))
+
+
 @app.route("/login/", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
